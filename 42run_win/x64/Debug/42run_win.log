@@ -1,0 +1,13 @@
+﻿  main.cpp
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwInit в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwTerminate в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwWindowHint в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwCreateWindow в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwWindowShouldClose в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwSetWindowShouldClose в функции "void __cdecl key_callback(struct GLFWwindow *,int,int,int,int)" (?key_callback@@YAXPEAUGLFWwindow@@HHHH@Z).
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwPollEvents в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwSetKeyCallback в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwMakeContextCurrent в функции main.
+main.obj : error LNK2019: ссылка на неразрешенный внешний символ glfwSwapBuffers в функции main.
+D:\Development\42run_win\42run_win\lib\GLFW\lib-vc2019\glfw3.lib : warning LNK4272: тип компьютера библиотеки "x86" конфликтует с типом целевого компьютера "x64"
+D:\Development\42run_win\x64\Debug\42run_win.exe : fatal error LNK1120: неразрешенных внешних элементов: 10
