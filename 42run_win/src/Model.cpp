@@ -8,21 +8,23 @@ Model::Model()
 
 void Model::LoadMesh()
 {
-	vert_number = 3;
-	float default_vert[9] = {
-	-1.0f, -0.9f, 0.0f,
-	 1.0f, -0.9f, 0.0f,
-	 0.0f,  1.0f, 0.0f
+	vert_number = 4;
+	float default_vert[12] = {
+	-0.9f, -0.9f, 0.0f,
+	-0.9f,  0.9f, 0.0f,
+	 0.9f,  0.9f, 0.0f,
+	 0.9f, -0.9f, 0.0f
 	};
-	vertices = new float[9];
-	for (int i = 0; i < 9; ++i)
+	vertices = new float[12];
+	for (int i = 0; i < 12; ++i)
 		vertices[i] = default_vert[i];
-	ind_number = 3;
-	indices = new unsigned int[3];
-	unsigned int default_indices[] = {
-		0, 1, 2
+	ind_number = 6;
+	indices = new unsigned int[6];
+	unsigned int default_indices[6] = {
+		0, 1, 2,
+		0, 2, 3
 	};
-	for (int i = 0; i < 3; ++i)
+	for (int i = 0; i < 6; ++i)
 		indices[i] = default_indices[i];
 }
 

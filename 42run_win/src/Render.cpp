@@ -1,15 +1,17 @@
 #include "Render.h"
 #include "glad.h"
 
-void Render::AddModel(Model *mod)
+void Render::AddEntity(Entity *ent)
 {
-	models.push_back(mod);
+	scene.push_back(ent);
 }
 
-void Render::DrawModels()
+void Render::DrawScene()
 {
-	for (Model* mod : models)
+	int length = scene.size();
+	for (int i = 0; i < length; ++i)
 	{
+		Model *mod = scene[i]->mod;
 		glUseProgram(mod->shader_id);
 		glBindVertexArray(mod->vao);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

@@ -1,13 +1,13 @@
 #pragma once
-#include "Model.h"
+#include "Entity.h"
 #include <vector>
 class Render
 {
 public:
-	void AddModel(Model *mod);
-	void DrawModels();
+	void AddEntity(Entity *ent);
+	void DrawScene();
 
 public:
 private:
-	std::vector<Model*> models;
+	std::vector<Entity*> scene;
 };

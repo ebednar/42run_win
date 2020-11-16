@@ -29,16 +29,18 @@ int main(void)
 	Model mod;
 	mod.LoadMesh();
 	mod.VertexBuffer();
+	Entity ent;
+	ent.SetModel(&mod);
 	Render rend;
-	rend.AddModel(&mod);
-	CreateShader(&(mod.shader_id), "res/shaders/vertex.shader", "res/shaders/fragment.shader");
+	rend.AddEntity(&ent);
+	CreateShader(&(ent.mod->shader_id), "res/shaders/vertex.shader", "res/shaders/fragment.shader");
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClearColor(0.3f, 0.4f, 0.9f, 1.0f);
 
-		rend.DrawModels();
+		rend.DrawScene();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
