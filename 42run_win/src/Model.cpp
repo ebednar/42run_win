@@ -10,9 +10,9 @@ void Model::LoadMesh()
 {
 	vert_number = 3;
 	float default_vert[9] = {
-	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+	-1.0f, -0.9f, 0.0f,
+	 1.0f, -0.9f, 0.0f,
+	 0.0f,  1.0f, 0.0f
 	};
 	vertices = new float[9];
 	for (int i = 0; i < 9; ++i)
