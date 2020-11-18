@@ -33,7 +33,7 @@ int main(void)
 	ent.SetModel(&mod);
 	Render rend;
 	rend.AddEntity(&ent);
-	CreateShader(&(ent.mod->shader_id), "res/shaders/vertex.shader", "res/shaders/fragment.shader");
+	create_shader(&(ent.mod->shader_id), "res/shaders/vertex.shader", "res/shaders/fragment.shader");
 
 	while (!glfwWindowShouldClose(window))
 	{

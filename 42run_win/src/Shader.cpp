@@ -4,7 +4,7 @@
 #include <sstream>
 #include "Shader.h"
 
-static std::string loadShader(const char* filepath)
+static std::string load_shader(const char* filepath)
 {
 	std::ifstream data(filepath);
 	std::string line;
@@ -17,7 +17,7 @@ static std::string loadShader(const char* filepath)
 	return str.str();
 }
 
-static unsigned int compileShader(unsigned int type, const std::string source)
+static unsigned int compile_shader(unsigned int type, const std::string source)
 {
 	unsigned id = glCreateShader(type);
 	const char* src = source.c_str();
@@ -44,18 +44,18 @@ static unsigned int compileShader(unsigned int type, const std::string source)
 	return id;
 }
 
-int CreateShader(int *program, const char *vertexPath, const char *fragmentPath)
+int create_shader(int *program, const char *vertexPath, const char *fragmentPath)
 {
-	std::string vertexShader = loadShader(vertexPath);
-	std::string fragmentShader = loadShader(fragmentPath);
+	std::string vertexShader = load_shader(vertexPath);
+	std::string fragmentShader = load_shader(fragmentPath);
 	if (vertexShader.empty() || fragmentShader.empty())
 	{
 		*program = 0;
 		return 0;
 	}
 	*program = glCreateProgram();
-	unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
-	unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
+	unsigned int vs = compile_shader(GL_VERTEX_SHADER, vertexShader);
+	unsigned int fs = compile_shader(GL_FRAGMENT_SHADER, fragmentShader);
 	if (vs == 0 || fs == 0)
 	{
 		*program = 0;
