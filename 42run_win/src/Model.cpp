@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Model.h"
 #include "glad.h"
 #define STB_IMAGE_IMPLEMENTATION
@@ -6,14 +7,14 @@
 void Model::LoadMesh()
 {
 	vert_number = 4;
-	float default_vert[24] = {
-		-0.9f, -0.9f, 0.0f, 1.0f, 0.0f, 0.0f,
-		-0.9f,  0.9f, 0.0f, 0.0f, 1.0f, 0.0f,
-		 0.9f,  0.9f, 0.0f, 0.0f, 0.0f, 1.0f,
-		 0.9f, -0.9f, 0.0f, 0.0f, 1.0f, 0.0f,
+	float default_vert[32] = {
+		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		 0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f
 	};
-	vertices = new float[24];
-	for (int i = 0; i < 24; ++i)
+	vertices = new float[32];
+	for (int i = 0; i < 32; ++i)
 		vertices[i] = default_vert[i];
 	ind_number = 6;
 	indices = new unsigned int[6];
@@ -32,15 +33,18 @@ void Model::VertexBuffer()
 	glGenBuffers(1, &ibo);
 	glBindVertexArray(vao);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, 6 * vert_number * sizeof(float), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * vert_number * sizeof(float), vertices, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, ind_number * sizeof(float), indices, GL_STATIC_DRAW);
 	// position
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	// color
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+	// texture
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 }
@@ -50,6 +54,8 @@ void Model:: LoadTexture()
 	int nrChannels;
 
 	text_data = stbi_load("res/textures/wall.jpg", &text_width, &text_height, &nrChannels, 0);
+	if (!text_data)
+		std::cout << "can't load texture file" << std::endl;
 }
 
 void Model::BindTexture()

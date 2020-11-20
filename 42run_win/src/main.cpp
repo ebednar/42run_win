@@ -29,6 +29,8 @@ int main(void)
 	Model mod;
 	mod.LoadMesh();
 	mod.VertexBuffer();
+	mod.LoadTexture();
+	mod.BindTexture();
 	Entity ent;
 	ent.SetModel(&mod);
 	Render rend;

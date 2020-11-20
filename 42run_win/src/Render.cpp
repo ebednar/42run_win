@@ -13,6 +13,7 @@ void Render::DrawScene()
 	{
 		Model *mod = scene[i]->mod;
 		glUseProgram(mod->shader_id);
+		glBindTexture(GL_TEXTURE_2D, mod->texture);
 		glBindVertexArray(mod->vao);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
