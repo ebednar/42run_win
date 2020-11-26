@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Events.cpp" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\42run.h" />
+    <ClInclude Include="include\engine.h" />
     <ClInclude Include="include\Entity.h" />
     <ClInclude Include="include\Events.h" />
     <ClInclude Include="include\Model.h" />

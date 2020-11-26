@@ -5,9 +5,8 @@
 class Render
 {
 public:
-	void AddEntity(Entity *ent);
-	void DrawScene();
 public:
+	void draw_scene(std::vector<Entity*> scene);
 private:
-	std::vector<Entity*> scene;
+
 };

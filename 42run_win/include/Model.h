@@ -16,11 +16,11 @@ public:
 	unsigned int	texture;
 	int	shader_id;
 public:
-	void LoadMesh();
-	void SetShader();
-	void VertexBuffer();
-	void LoadTexture();
-	void BindTexture();
+	void load_mesh();
+	void vertex_buffer();
+	void set_shader(const char *vPath, const char *fpath);
+	void load_texture(const char *path);
+	void bind_texture();
 private:
 
 };
