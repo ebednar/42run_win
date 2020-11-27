@@ -28,22 +28,29 @@ void Engine::init_engine(int width, int height)
 		exit(EXIT_FAILURE);
 	}
 	glfwMakeContextCurrent(window);
-	glfwSetKeyCallback(window, key_callback);
 	if (!gladLoadGL())
 	{
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetWindowUserPointer(window, &controls);
 	glViewport(0, 0, width, height);
 	glEnable(GL_DEPTH_TEST);
+
+	controls.yaw = cam.yaw;
+	controls.pitch = cam.pitch;
+
 }
 
-void Engine::add_entity(Entity* ent)
+void Engine::add_entity(Entity *ent)
 {
 	scene.push_back(ent);
 }
 
-void Engine::run_engine(void (*func)(Engine*))
+void Engine::run_engine(void (*func)(Engine *))
 {
 	old_time = glfwGetTime();
 	while (!glfwWindowShouldClose(window))
@@ -64,7 +71,7 @@ void Engine::run_engine(void (*func)(Engine*))
 
 		func(this);
 
-		rend.draw_scene(scene);
+		rend.draw_scene(scene, &cam);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

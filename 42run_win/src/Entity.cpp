@@ -10,11 +10,11 @@ Entity::Entity()
 
 }
 
-void Entity::set_model()
+void Entity::set_model(const char* path)
 {
 	mod = new Model();
 
-	mod->load_mesh();
+	mod->load_obj(path);
 	mod->vertex_buffer();
 	mod->set_shader("res/shaders/vertex.shader", "res/shaders/fragment.shader");
 	mod->load_texture("res/textures/wall.jpg");
