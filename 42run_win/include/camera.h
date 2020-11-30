@@ -18,7 +18,8 @@ public:
 	float		pitch;
 public:
 	Camera();
-	void	update();
+	void	update_free();
+	void	update_follow(glm::vec3 targ);
 private:
 
 };

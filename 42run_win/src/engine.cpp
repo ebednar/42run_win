@@ -4,13 +4,15 @@
 
 Engine::~Engine()
 {
-	int length = scene.size();
+	int length = models.size();
 	for (int i = 0; i < length; ++i)
 	{
-		delete scene[i]->mod->vertices;
-		delete scene[i]->mod;
-		delete scene[i];
+		delete models[i]->vertices;
+		delete models[i];
 	}
+	length = scene.size();
+	for (int i = 0; i < length; ++i)
+		delete scene[i];
 	std::cout << "Engine off" << std::endl;
 }
 
@@ -42,12 +44,6 @@ void Engine::init_engine(int width, int height)
 
 	controls.yaw = cam.yaw;
 	controls.pitch = cam.pitch;
-
-}
-
-void Engine::add_entity(Entity *ent)
-{
-	scene.push_back(ent);
 }
 
 void Engine::run_engine(void (*func)(Engine *))
@@ -71,10 +67,31 @@ void Engine::run_engine(void (*func)(Engine *))
 
 		func(this);
 
-		rend.draw_scene(scene, &cam);
+		rend.draw_scene(scene, light_sources, &cam);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
 	glfwTerminate();
+}
+
+void Engine::add_model(Model *mod)
+{
+	models.push_back(mod);
+}
+
+void Engine::add_entity(Entity *ent)
+{
+	scene.push_back(ent);
+}
+
+void Engine::set_player(Entity *ent)
+{
+	player = ent;
+	rend.player = ent;
+}
+
+void Engine::add_light_source(Entity* ent)
+{
+	light_sources.push_back(ent);
 }

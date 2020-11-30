@@ -1,24 +1,19 @@
-#include "Entity.h"
+#include "entity.h"
+#include "glm/glm.hpp"
 
 Entity::Entity()
 {
 	move_to(0.0f, 0.0f, 0.0f);
-	angle[0] = 0;
-	angle[1] = 0;
-	angle[2] = 0;
+	angle[0] = 0.0f;
+	angle[1] = 0.0f;
+	angle[2] = 0.0f;
 	scale(1.0f, 1.0f, 1.0f);
 
 }
 
-void Entity::set_model(const char* path)
+void Entity::set_model(Model *model)
 {
-	mod = new Model();
-
-	mod->load_obj(path);
-	mod->vertex_buffer();
-	mod->set_shader("res/shaders/vertex.shader", "res/shaders/fragment.shader");
-	mod->load_texture("res/textures/wall.jpg");
-	mod->bind_texture();
+	mod = model;
 }
 
 void Entity::move(float x, float y, float z)

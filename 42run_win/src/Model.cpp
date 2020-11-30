@@ -1,8 +1,8 @@
-#include "Model.h"
+#include "model.h"
 #include "glad.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include "Shader.h"
+#include "shader.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -19,9 +19,6 @@ int Model::load_obj(const char* path)
 		return (1);
 
 	std::string line;
-
-	//std::cout << str.data() << std::endl;
-
 	std::vector< unsigned int > vertex_ind, uv_ind, normal_ind;
 	std::vector< glm::vec3 > vec_vertices;
 	std::vector< glm::vec2 > vec_uvs;
@@ -103,6 +100,7 @@ int Model::load_obj(const char* path)
 		vertices[i * 8 + 6] = vec_normals[normal_ind[i] - 1].y;
 		vertices[i * 8 + 7] = vec_normals[normal_ind[i] - 1].z;
 	}
+	vertex_buffer();
 	return 0;
 }
 
@@ -144,6 +142,7 @@ void Model:: load_texture(const char* path)
 	text_data = stbi_load(path, &text_width, &text_height, &nrChannels, 0);
 	if (!text_data)
 		std::cout << "can't load texture file" << std::endl;
+	bind_texture();
 }
 
 void Model::bind_texture()

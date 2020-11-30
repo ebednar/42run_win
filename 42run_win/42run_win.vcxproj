@@ -124,7 +124,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)42run_win\include;$(SolutionDir)42run_win\lib\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -157,11 +157,11 @@
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\engine.cpp" />
-    <ClCompile Include="src\Entity.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Events.cpp" />
-    <ClCompile Include="src\Model.cpp" />
-    <ClCompile Include="src\Render.cpp" />
+    <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\events.cpp" />
+    <ClCompile Include="src\model.cpp" />
+    <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
@@ -169,13 +169,13 @@
     <ClInclude Include="include\42run.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\engine.h" />
-    <ClInclude Include="include\Entity.h" />
-    <ClInclude Include="include\Events.h" />
-    <ClInclude Include="include\Model.h" />
-    <ClInclude Include="include\Render.h" />
+    <ClInclude Include="include\entity.h" />
+    <ClInclude Include="include\events.h" />
+    <ClInclude Include="include\model.h" />
+    <ClInclude Include="include\render.h" />
     <ClInclude Include="include\glad.h" />
     <ClInclude Include="include\khrplatform.h" />
-    <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\stb_image.h" />
     <ClInclude Include="lib\GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="lib\GLFW\include\GLFW\glfw3native.h" />

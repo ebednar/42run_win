@@ -1,16 +1,17 @@
 #pragma once
-#include "Model.h"
+#include "model.h"
+#include "glm/glm.hpp"
 
 class Entity
 {
 public:
-	Model	*mod;
-	float	position[3];
-	float	e_scale[3];
-	float	angle[3];
+	Model		*mod;
+	glm::vec3	position;
+	glm::vec3	e_scale;
+	glm::vec3	angle;
 public:
 	Entity();
-	void set_model(const char *path);
+	void set_model(Model *mod);
 	void move(float x, float y, float z);
 	void move_to(float x, float y, float z);
 	void rotate(float x, float y, float z);
