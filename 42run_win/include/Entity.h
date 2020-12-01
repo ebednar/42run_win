@@ -15,6 +15,7 @@ public:
 	void move(float x, float y, float z);
 	void move_to(float x, float y, float z);
 	void rotate(float x, float y, float z);
+	void rotate_to(float x, float y, float z);
 	void scale(float x, float y, float z);
 private:
 };

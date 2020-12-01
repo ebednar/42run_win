@@ -10,7 +10,7 @@
 #include <fstream>
 #include <sstream>
 
-int Model::load_obj(const char* path)
+int Model::load_obj(const char* path, bool loadBuf)
 {
 	std::ifstream		file;
 
@@ -100,7 +100,8 @@ int Model::load_obj(const char* path)
 		vertices[i * 8 + 6] = vec_normals[normal_ind[i] - 1].y;
 		vertices[i * 8 + 7] = vec_normals[normal_ind[i] - 1].z;
 	}
-	vertex_buffer();
+	if (loadBuf)
+		vertex_buffer();
 	return 0;
 }
 

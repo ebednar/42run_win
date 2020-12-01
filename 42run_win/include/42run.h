@@ -1,9 +1,10 @@
 #pragma once
+#include "engine.h"
 
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 1280
+#define HEIGHT 720
 
-enum next_plat
+enum next_dir
 {
 	forw,
 	left,
@@ -12,7 +13,13 @@ enum next_plat
 
 struct state
 {
-	float p_old_pos[3];
-	float plat_end[3];
-	next_plat next;
+	float		p_new_pos[3];
+	float		plat_end[3];
+	float		plat_start[3];
+	Entity		**current_plat;
+	Entity		**next_plat;
+	bool		rotate;
+	int			frames;
+	next_dir	current;
+	next_dir	next;
 };

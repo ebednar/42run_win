@@ -16,7 +16,7 @@ public:
 	unsigned int	texture;
 	int				shader_id;
 public:
-	int		load_obj(const char* path);
+	int		load_obj(const char* path, bool loadBuf);
 	void	vertex_buffer();
 	void	set_shader(const char *vPath, const char *fpath);
 	void	load_texture(const char *path);

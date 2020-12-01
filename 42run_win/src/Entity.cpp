@@ -37,6 +37,13 @@ void Entity::rotate(float x, float y, float z)
 	angle[2] += z;
 }
 
+void Entity::rotate_to(float x, float y, float z)
+{
+	angle[0] = x;
+	angle[1] = y;
+	angle[2] = z;
+}
+
 void Entity::scale(float x, float y, float z)
 {
 	e_scale[0] = x;

@@ -8,7 +8,8 @@
 void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights, Camera *cam)
 {
 	int length = scene.size();
-	cam->update_follow(player->position);
+	//cam->update_follow(player->position);
+	cam->update_free();
 	for (int i = 0; i < length; ++i)
 	{
 		Entity	*ent = scene[i];
@@ -26,7 +27,7 @@ void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights
 		model = glm::scale(model, ent->e_scale);
 
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(60.0f), 640.0f / 480.0f, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(60.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
 
 
 		unsigned int model_loc = glGetUniformLocation(mod->shader_id, "u_M");
