@@ -16,6 +16,7 @@ public:
 	Entity					*player;
 	std::vector<Entity *>	light_sources;
 	state					*state;
+	bool					free_cam;
 public:
 	~Engine();
 	void init_engine(int width, int height);

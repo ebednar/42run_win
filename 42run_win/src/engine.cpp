@@ -60,14 +60,14 @@ void Engine::run_engine(void (*func)(Engine *))
 		if (timer >= 1.0)
 		{
 			timer -= 1.0;
-			//std::cout << "fps - " << fps << std::endl;
+			std::cout << "fps - " << fps << std::endl;
 			fps = 0;
 		}
 		old_time = glfwGetTime();
 
 		func(this);
 
-		rend.draw_scene(scene, light_sources, &cam);
+		rend.draw_scene(scene, light_sources, &cam, free_cam);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

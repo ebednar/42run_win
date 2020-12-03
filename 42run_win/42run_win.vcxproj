@@ -156,8 +156,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\controls.cpp" />
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\game_loop.cpp" />
+    <ClCompile Include="src\init_level.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\events.cpp" />
     <ClCompile Include="src\model.cpp" />

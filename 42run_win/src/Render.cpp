@@ -5,11 +5,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights, Camera *cam)
+void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights, Camera *cam, bool free_cam)
 {
 	int length = scene.size();
-	//cam->update_follow(player->position);
-	cam->update_free();
+	if (free_cam)
+		cam->update_free();
+	else
+		cam->update_follow(player->position);
 	for (int i = 0; i < length; ++i)
 	{
 		Entity	*ent = scene[i];
@@ -27,7 +29,7 @@ void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights
 		model = glm::scale(model, ent->e_scale);
 
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(60.0f), 1280.0f / 720.0f, 0.1f, 100.0f);
+		projection = glm::perspective(glm::radians(60.0f), 640.0f / 480.0f, 0.1f, 100.0f);
 
 
 		unsigned int model_loc = glGetUniformLocation(mod->shader_id, "u_M");
@@ -41,10 +43,10 @@ void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights
 		glUniform3f(glGetUniformLocation(mod->shader_id, "viewPos"), cam->pos.x, cam->pos.y, cam->pos.z);
 		glUniform1i(glGetUniformLocation(mod->shader_id, "material.diffuse"), 0);
 		glUniform3f(glGetUniformLocation(mod->shader_id, "material.specular"), 0.5f, 0.5f, 0.5f);
-		glUniform1f(glGetUniformLocation(mod->shader_id, "material.shininess"), 32.0f);
-		glUniform3f(glGetUniformLocation(mod->shader_id, "light.ambient"), 0.1f, 0.1f, 0.1f);
-		glUniform3f(glGetUniformLocation(mod->shader_id, "light.diffuse"), 0.5f, 0.5f, 0.5f);
-		glUniform3f(glGetUniformLocation(mod->shader_id, "light.specular"), 0.9f, 0.9f, 0.9f);
+		glUniform1f(glGetUniformLocation(mod->shader_id, "material.shininess"), 16.0f);
+		glUniform3f(glGetUniformLocation(mod->shader_id, "light.ambient"), 0.2f, 0.2f, 0.2f);
+		glUniform3f(glGetUniformLocation(mod->shader_id, "light.diffuse"), 0.7f, 0.7f, 0.7f);
+		glUniform3f(glGetUniformLocation(mod->shader_id, "light.specular"), 0.7f, 0.7f, 0.7f);
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 	}
