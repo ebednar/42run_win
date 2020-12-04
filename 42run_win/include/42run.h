@@ -25,17 +25,22 @@ struct state
 	float		plat_start[3];
 	Entity		**current_plat;
 	Entity		**next_plat;
+	Entity		*current_light;
+	Entity		*next_light;
 	bool		rotate;
 	float		frames;
 	next_dir	current;
 	next_dir	w_current;
 	next_dir	next;
-	next_dir	p_pos;
+	player_pos	p_pos;
 	float		shifting_x;
 	float		shifting_y;
+	int			shift;
 	bool		shifting;
 };
 
 void	init_game(Engine* eng, state* state);
 void	game_loop(Engine* eng);
 void	controls(Engine* eng);
+void	shift_player_l(Engine* eng);
+void	shift_player_r(Engine* eng);

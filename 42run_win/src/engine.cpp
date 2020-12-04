@@ -67,7 +67,7 @@ void Engine::run_engine(void (*func)(Engine *))
 
 		func(this);
 
-		rend.draw_scene(scene, light_sources, &cam, free_cam);
+		rend.draw_scene(scene, light_pos, &cam, free_cam);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -94,4 +94,5 @@ void Engine::set_player(Entity *ent)
 void Engine::add_light_source(Entity* ent)
 {
 	light_sources.push_back(ent);
+	light_pos.push_back(&ent->position);
 }

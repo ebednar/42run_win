@@ -48,7 +48,8 @@ static void	create_platform(Engine* eng, state* state)
 void		init_game(Engine* eng, state* state)
 {
 	Entity* player = new Entity();
-	Entity* light = new Entity();
+	Entity* light1 = new Entity();
+	Entity* light2 = new Entity();
 
 	Model* player_mod = new Model();
 	Model* light_mod = new Model();
@@ -68,22 +69,31 @@ void		init_game(Engine* eng, state* state)
 	eng->add_entity(player);
 	eng->set_player(player);
 	player->move_to(0.0f, 0.0f, 0.0f);
+	player->scale(1.0f, 1.0f, 1.0f);
 
 	memset(state->plat_end, 0, 3 * sizeof(float));
 	memset(state->plat_start, 0, 3 * sizeof(float));
 	state->next = forw;
 	state->rotate = false;
 	state->frames = 0.0f;
-	state->p_pos = forw;
+	state->p_pos = center_r;
 	state->shifting_x = 0.0f;
 	state->shifting_y = 0.0f;
+	eng->state->shifting = true;
+
+	light1->set_model(light_mod);
+	eng->add_entity(light1);
+	eng->add_light_source(light1);
+	light1->scale(0.1f, 0.1f, 0.1f);
+	light1->move_to(15.0f, 2.0f, 0.0f);
+	
+	light2->set_model(light_mod);
+	eng->add_entity(light2);
+	eng->add_light_source(light2);
+	light2->scale(0.1f, 0.1f, 0.1f);
+	light2->move_to(30.0f, 2.0f, 0.0f);
+
 	create_platform(eng, state);
 
-	light->set_model(light_mod);
-	eng->add_entity(light);
-	eng->add_light_source(light);
-	light->scale(0.1f, 0.1f, 0.1f);
-	light->move_to(15.0f, 2.0f, 0.0f);
-	
-	eng->free_cam = false;
+	eng->free_cam = true;
 }

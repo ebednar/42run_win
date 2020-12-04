@@ -75,11 +75,17 @@ void	rotate_player(Engine* eng)
 		eng->state->frames = 0.0f;
 		eng->state->rotate = false;
 		if (eng->state->w_current == right)
-			eng->player->rotate_to(0.0f, -90.0f, 0.0f);
+		{
+			eng->player->angle.y = -90.0f;
+		}
 		if (eng->state->w_current == forw)
-			eng->player->rotate_to(0.0f, 0.0f, 0.0f);
+		{
+			eng->player->angle.y = 0.0f;
+		}
 		if (eng->state->w_current == left)
-			eng->player->rotate_to(0.0f, 90.0f, 0.0f);
+		{
+			eng->player->angle.y = 90.0f;
+		}
 		if (eng->state->w_current == right && eng->state->next == forw)
 			eng->state->current = left;
 		else if (eng->state->w_current == left && eng->state->next == forw)
@@ -108,8 +114,23 @@ void	game_loop(Engine* eng)
 		replace_platform(eng);
 		replace_light(eng);
 	}
-	if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 3.0f)
+	if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 4.0f)
 	{
-		eng->state->shifting = true;
+		std::cout << "shift" << std::endl;
+		eng->state->shifting = false;
+
+		if (eng->state->p_pos == left_r)
+			shift_player_r(eng);
+		else if (eng->state->p_pos == right_r)
+			shift_player_l(eng);
+		else
+			eng->state->shifting = true;
+		if (eng->state->shift == 0)
+		{
+			if (eng->state->w_current == forw)
+				eng->player->position.x = eng->state->plat_start[0];
+			else
+				eng->player->position.z = eng->state->plat_start[2];
+		}
 	}
 }

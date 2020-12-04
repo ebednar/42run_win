@@ -1,11 +1,8 @@
 #include "render.h"
 #include "glad.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights, Camera *cam, bool free_cam)
+void Render::draw_scene(std::vector<Entity *> scene, std::vector<glm::vec3 *> lights, Camera *cam, bool free_cam)
 {
 	int length = scene.size();
 	if (free_cam)
@@ -39,7 +36,9 @@ void Render::draw_scene(std::vector<Entity *> scene, std::vector<Entity*> lights
 		unsigned int proj_loc = glGetUniformLocation(mod->shader_id, "u_P");
 		glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(projection));
 
-		glUniform3f(glGetUniformLocation(mod->shader_id, "lightPos"), lights[0]->position.x, lights[0]->position.y, lights[0]->position.z);
+		//glUniform3f(glGetUniformLocation(mod->shader_id, "lightPos"), lights[0]->position.x, lights[0]->position.y, lights[0]->position.z);
+		glUniform1i(glGetUniformLocation(mod->shader_id, "lightNumb"), 2);
+		glUniform3fv(glGetUniformLocation(mod->shader_id, "lightPos"), 2, (GLfloat *)lights[0]);
 		glUniform3f(glGetUniformLocation(mod->shader_id, "viewPos"), cam->pos.x, cam->pos.y, cam->pos.z);
 		glUniform1i(glGetUniformLocation(mod->shader_id, "material.diffuse"), 0);
 		glUniform3f(glGetUniformLocation(mod->shader_id, "material.specular"), 0.5f, 0.5f, 0.5f);

@@ -8,23 +8,24 @@ struct state;
 
 class Engine {
 public:
-	Camera					cam;
-	double					delta_time = 0.0;
-	std::vector<Model *>	models;
-	std::vector<Entity *>	scene;
-	Controls				controls;
-	Entity					*player;
-	std::vector<Entity *>	light_sources;
-	state					*state;
-	bool					free_cam;
+	Camera						cam;
+	double						delta_time = 0.0;
+	std::vector<Model *>		models;
+	std::vector<Entity *>		scene;
+	Controls					controls;
+	Entity						*player;
+	std::vector<Entity *>		light_sources;
+	std::vector<glm::vec3 *>	light_pos;
+	state						*state;
+	bool						free_cam;
 public:
-	~Engine();
-	void init_engine(int width, int height);
-	void run_engine(void (*func)(Engine *));
-	void add_model(Model *mod);
-	void add_entity(Entity *ent);
-	void set_player(Entity *ent);
-	void add_light_source(Entity *ent);
+			~Engine();
+	void	init_engine(int width, int height);
+	void	run_engine(void (*func)(Engine *));
+	void	add_model(Model *mod);
+	void	add_entity(Entity *ent);
+	void	set_player(Entity *ent);
+	void	add_light_source(Entity *ent);
 private:
 	GLFWwindow				*window;
 	Render					rend;

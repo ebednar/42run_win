@@ -2,34 +2,32 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-void	shift_player(Engine* eng, float speed, int side)
+void	shift_player_l(Engine* eng)
 {
-	
-	eng->state->shifting_x += side * speed * sin(glm::radians(eng->player->angle[1]));
-	eng->state->shifting_y += side * speed * cos(glm::radians(eng->player->angle[1]));
-	std::cout << "x " << eng->state->shifting_x << std::endl;
-	std::cout << "y " << eng->state->shifting_y << std::endl;
-	if (eng->state->shifting_x >= 1.0f)
-	{
-		eng->state->shifting_x = 1.0f;
-		return;
-	}
-	if (eng->state->shifting_x <= -1.0f)
-	{
-		eng->state->shifting_x = 1.0f;
-		return;
-	}
-	if (eng->state->shifting_y >= 1.0f)
-	{
-		eng->state->shifting_y = 1.0f;
-		return;
-	}
-	if (eng->state->shifting_y <= -1.0f)
-	{
-		eng->state->shifting_y = -1.0f;
-		return;
-	}
-	eng->player->move(side * speed * sin(glm::radians(eng->player->angle[1])), 0.0f, side * speed * cos(glm::radians(eng->player->angle[1])));
+	eng->state->shifting = false;
+	if (eng->state->p_pos == left_r || eng->state->shift > 0)
+		return ;
+	if (eng->state->p_pos == center_r)
+		eng->state->p_pos = left_r;
+	else
+		eng->state->p_pos = center_r;
+	eng->state->shifting_x = -sin(glm::radians(eng->player->angle[1]));
+	eng->state->shifting_y = -cos(glm::radians(eng->player->angle[1]));
+	eng->state->shift = 20;
+}
+
+void	shift_player_r(Engine* eng)
+{
+	eng->state->shifting = false;
+	if (eng->state->p_pos == right_r || eng->state->shift > 0)
+		return ;
+	if (eng->state->p_pos == center_r)
+		eng->state->p_pos = right_r;
+	else
+		eng->state->p_pos = center_r;
+	eng->state->shifting_x = sin(glm::radians(eng->player->angle[1]));
+	eng->state->shifting_y = cos(glm::radians(eng->player->angle[1]));
+	eng->state->shift = 20;
 }
 
 void	controls(Engine* eng)
@@ -52,12 +50,22 @@ void	controls(Engine* eng)
 	}
 	else
 	{
-		if (eng->controls.keys[GLFW_KEY_A])
-			shift_player(eng, speed, -1);
-		if (eng->controls.keys[GLFW_KEY_D])
-			shift_player(eng, speed, 1);
 		eng->cam.pos.x = eng->player->position[0];
 		eng->cam.pos.z = eng->player->position[2];
 		eng->cam.yaw = -eng->player->angle.y;
+		std::cout << eng->state->p_pos << std::endl;
+		if (eng->state->shift > 0)
+		{
+			eng->state->shift--;
+			eng->player->move(0.05 * eng->state->shifting_x, 0.0f, 0.05 * eng->state->shifting_y);
+		}
+		else
+			eng->state->shifting = true;
+		if (eng->state->shifting == false)
+			return ;
+		if (eng->controls.keys[GLFW_KEY_A])
+			shift_player_l(eng);
+		if (eng->controls.keys[GLFW_KEY_D])
+			shift_player_r(eng);
 	}
 }

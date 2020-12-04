@@ -17,8 +17,9 @@ struct Light {
     vec3 specular;
 };
 
+uniform	int lightNumb;
 uniform Light light;
-uniform vec3 lightPos;
+uniform vec3 lightPos[2];
 uniform vec3 viewPos;
 uniform Material material;
 
@@ -26,17 +27,23 @@ out vec4 fColor;
 
 void main()
 {
+	vec3 result = vec3(0.0f, 0.0f, 0.0f);
+
     vec3 ambient = texture(material.diffuse, vTexCoord).rgb * light.ambient;
+	result += ambient;
+	for(int i = 0; i < lightNumb; ++i)
+	{
+		vec3 norm = normalize(vNormal);
+		vec3 lightDir = normalize(lightPos[i] - vFragPos);
+		float diff = max(dot(norm, lightDir), 0.0);
+		vec3 diffuse = texture(material.diffuse, vTexCoord).rgb * diff *  light.diffuse;
+		result += diffuse;
 
-	vec3 norm = normalize(vNormal);
-	vec3 lightDir = normalize(lightPos - vFragPos);
-	float diff = max(dot(norm, lightDir), 0.0);
-	vec3 diffuse = texture(material.diffuse, vTexCoord).rgb * diff *  light.diffuse;
-
-	vec3 viewDir = normalize(viewPos - vFragPos);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
-	vec3 specular = material.specular * spec * light.specular;
-
-	fColor = vec4(ambient + diffuse + specular, 1.0f);
+		vec3 viewDir = normalize(viewPos - vFragPos);
+		vec3 reflectDir = reflect(-lightDir, norm);
+		float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+		vec3 specular = material.specular * spec * light.specular;
+		result += specular;
+	}
+	fColor = vec4(result, 1.0f);
 }
