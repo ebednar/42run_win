@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "Shader.h"
+#include "shader.h"
 
 static std::string load_shader(const char* filepath)
 {

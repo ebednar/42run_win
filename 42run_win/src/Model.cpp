@@ -16,8 +16,10 @@ int Model::load_obj(const char* path, bool loadBuf)
 
 	file.open(path);
 	if (not file.is_open())
+	{
+		std::cout << "model file not found" << std::endl;
 		return (1);
-
+	}
 	std::string line;
 	std::vector< unsigned int > vertex_ind, uv_ind, normal_ind;
 	std::vector< glm::vec3 > vec_vertices;

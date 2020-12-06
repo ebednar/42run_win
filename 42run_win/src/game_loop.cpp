@@ -101,8 +101,6 @@ void	rotate_player(Engine* eng)
 
 void	game_loop(Engine* eng)
 {
-	int dist;
-
 	controls(eng);
 	if (eng->state->rotate)
 	{
