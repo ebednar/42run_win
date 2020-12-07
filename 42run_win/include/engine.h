@@ -15,7 +15,7 @@ public:
 	Controls					controls;
 	Entity						*player;
 	std::vector<Entity *>		light_sources;
-	std::vector<glm::vec3 *>	light_pos;
+	glm::vec3					**light_pos;
 	state						*state;
 	bool						free_cam;
 public:
@@ -26,6 +26,7 @@ public:
 	void	add_entity(Entity *ent);
 	void	set_player(Entity *ent);
 	void	add_light_source(Entity *ent);
+	void	set_lights_pos();
 private:
 	GLFWwindow				*window;
 	Render					rend;

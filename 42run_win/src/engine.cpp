@@ -94,5 +94,14 @@ void Engine::set_player(Entity *ent)
 void Engine::add_light_source(Entity* ent)
 {
 	light_sources.push_back(ent);
-	light_pos.push_back(&ent->position);
+}
+
+void Engine::set_lights_pos()
+{
+	int length = light_sources.size();
+	light_pos = (glm::vec3**)malloc(length * sizeof(glm::vec3));
+	for (int i = 0; i < length; ++i)
+	{
+		light_pos[i] = &light_sources[i]->position;
+	}
 }

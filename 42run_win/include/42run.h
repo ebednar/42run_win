@@ -27,6 +27,7 @@ struct state
 	Entity		**next_plat;
 	Entity		*current_light;
 	Entity		*next_light;
+	Entity		*prev_light;
 	bool		rotate;
 	float		frames;
 	next_dir	current;
@@ -37,6 +38,8 @@ struct state
 	float		shifting_y;
 	int			shift;
 	bool		shifting;
+	bool		shift_rotate;
+	int			delay;
 };
 
 void	init_game(Engine* eng, state* state);

@@ -2,12 +2,16 @@
 
 void replace_light(Engine* eng)
 {
-	if (eng->state->w_current == forw)
-		eng->light_sources[0]->move_to(eng->state->plat_start[0] - 15.0f, 2.0f, eng->state->plat_start[2]);
-	else if (eng->state->w_current == right)
-		eng->light_sources[0]->move_to(eng->state->plat_start[0], 2.0f, eng->state->plat_start[2] - 15.0f);
-	else if (eng->state->w_current == left)
-		eng->light_sources[0]->move_to(eng->state->plat_start[0], 2.0f, eng->state->plat_start[2] + 15.0f);
+	if (eng->state->next == forw)
+		eng->state->prev_light->move_to(eng->state->plat_start[0] + 15.0f, 2.0f, eng->state->plat_start[2]);
+	else if (eng->state->next == right)
+		eng->state->prev_light->move_to(eng->state->plat_start[0], 2.0f, eng->state->plat_start[2] + 15.0f);
+	else if (eng->state->next == left)
+		eng->state->prev_light->move_to(eng->state->plat_start[0], 2.0f, eng->state->plat_start[2] - 15.0f);
+	Entity* ptr = eng->state->prev_light;
+	eng->state->prev_light = eng->state->current_light;
+	eng->state->current_light = eng->state->next_light;
+	eng->state->next_light = ptr;
 }
 
 void replace_platform(Engine* eng)
@@ -33,7 +37,6 @@ void replace_platform(Engine* eng)
 			for (j = -1; j < 2; ++j)
 				eng->state->current_plat[k++]->move_to((float)i + eng->state->plat_end[0], -1.05f, (float)j + eng->state->plat_end[2]);
 		eng->state->plat_end[0] += 29.0f;
-		eng->state->rotate = true;
 	}
 	else if (eng->state->next == right)
 	{
@@ -41,7 +44,6 @@ void replace_platform(Engine* eng)
 			for (j = -1; j < 2; ++j)
 				eng->state->current_plat[k++]->move_to((float)j + eng->state->plat_end[0], -1.05f, (float)i + eng->state->plat_end[2]);
 		eng->state->plat_end[2] += 29.0f;
-		eng->state->rotate = true;
 	}
 	else
 	{
@@ -49,7 +51,6 @@ void replace_platform(Engine* eng)
 			for (j = -1; j < 2; ++j)
 				eng->state->current_plat[k++]->move_to((float)j + eng->state->plat_end[0], -1.05f, eng->state->plat_end[2] - (float)i);
 		eng->state->plat_end[2] -= 29.0f;
-		eng->state->rotate = true;
 	}
 	ptr = eng->state->current_plat;
 	eng->state->current_plat = eng->state->next_plat;
@@ -74,6 +75,7 @@ void	rotate_player(Engine* eng)
 	{
 		eng->state->frames = 0.0f;
 		eng->state->rotate = false;
+		eng->state->shift_rotate = false;
 		if (eng->state->w_current == right)
 		{
 			eng->player->angle.y = -90.0f;
@@ -95,7 +97,6 @@ void	rotate_player(Engine* eng)
 		else
 			eng->state->current = eng->state->next;
 		eng->state->w_current = eng->state->next;
-		std::cout << eng->state->current << std::endl;
 	}
 }
 
@@ -104,25 +105,36 @@ void	game_loop(Engine* eng)
 	controls(eng);
 	if (eng->state->rotate)
 	{
+		std::cout << "rotate" << std::endl;
 		rotate_player(eng);
 		return;
 	}
+	/*if (eng->state->delay >= 0)
+	{
+		eng->state->delay--;
+		if (eng->state->delay == 0)
+		{
+			std::cout << "replace" << std::endl;
+			replace_platform(eng);
+			replace_light(eng);
+		}
+	}*/
 	if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 2.0f)
 	{
+		std::cout << "detect" << std::endl;
+		eng->state->rotate = true;
 		replace_platform(eng);
 		replace_light(eng);
+		eng->state->delay = 120;
 	}
-	if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 4.0f)
+	else if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 4.0f)
 	{
-		std::cout << "shift" << std::endl;
 		eng->state->shifting = false;
-
+		eng->state->shift_rotate = true;
 		if (eng->state->p_pos == left_r)
 			shift_player_r(eng);
 		else if (eng->state->p_pos == right_r)
 			shift_player_l(eng);
-		else
-			eng->state->shifting = true;
 		if (eng->state->shift == 0)
 		{
 			if (eng->state->w_current == forw)

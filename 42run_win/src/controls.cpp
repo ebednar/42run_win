@@ -53,7 +53,6 @@ void	controls(Engine* eng)
 		eng->cam.pos.x = eng->player->position[0];
 		eng->cam.pos.z = eng->player->position[2];
 		eng->cam.yaw = -eng->player->angle.y;
-		std::cout << eng->state->p_pos << std::endl;
 		if (eng->state->shift > 0)
 		{
 			eng->state->shift--;
@@ -61,7 +60,7 @@ void	controls(Engine* eng)
 		}
 		else
 			eng->state->shifting = true;
-		if (eng->state->shifting == false)
+		if (eng->state->shifting == false || eng->state->shift_rotate)
 			return ;
 		if (eng->controls.keys[GLFW_KEY_A])
 			shift_player_l(eng);

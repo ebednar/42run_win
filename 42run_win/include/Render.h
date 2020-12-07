@@ -8,6 +8,6 @@ class Render
 public:
 	Entity *player;
 public:
-	void	draw_scene(std::vector<Entity *> scene, std::vector<glm::vec3 *> lights, Camera *cam, bool free_cam);
+	void	draw_scene(std::vector<Entity *> scene, glm::vec3 **lights, Camera *cam, bool free_cam);
 private:
 };

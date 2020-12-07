@@ -7,7 +7,7 @@ static void	create_platform(Engine* eng, state* state)
 	int				j;
 	unsigned int	k;
 
-	platform_mod->load_obj("res/models/test.obj", true);
+	platform_mod->load_obj("res/models/platform.obj", true);
 	platform_mod->set_shader("res/shaders/stand_vertex.glsl", "res/shaders/stand_fragment.glsl");
 	platform_mod->load_texture("res/textures/wall.jpg");
 	eng->add_model(platform_mod);
@@ -50,6 +50,7 @@ void		init_game(Engine* eng, state* state)
 	Entity* player = new Entity();
 	Entity* light1 = new Entity();
 	Entity* light2 = new Entity();
+	Entity* light3 = new Entity();
 
 	Model* player_mod = new Model();
 	Model* light_mod = new Model();
@@ -80,20 +81,33 @@ void		init_game(Engine* eng, state* state)
 	state->shifting_x = 0.0f;
 	state->shifting_y = 0.0f;
 	eng->state->shifting = true;
+	eng->state->shift_rotate = false;
+	eng->state->delay = -1;
 
 	light1->set_model(light_mod);
 	eng->add_entity(light1);
 	eng->add_light_source(light1);
 	light1->scale(0.1f, 0.1f, 0.1f);
 	light1->move_to(15.0f, 2.0f, 0.0f);
-	
+
 	light2->set_model(light_mod);
 	eng->add_entity(light2);
 	eng->add_light_source(light2);
 	light2->scale(0.1f, 0.1f, 0.1f);
-	light2->move_to(30.0f, 2.0f, 0.0f);
+	light2->move_to(45.0f, 2.0f, 0.0f);
+
+	light3->set_model(light_mod);
+	eng->add_entity(light3);
+	eng->add_light_source(light3);
+	light3->scale(0.1f, 0.1f, 0.1f);
+	light3->move_to(-15.0f, 2.0f, 0.0f);
+
+	eng->set_lights_pos();
+	state->prev_light = light3;
+	state->current_light = light1;
+	state->next_light = light2;
 
 	create_platform(eng, state);
 
-	eng->free_cam = true;
+	eng->free_cam = false;
 }
