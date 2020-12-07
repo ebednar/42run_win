@@ -11,5 +11,9 @@ int		main(void)
 	engine.state = &state;
 	init_game(&engine, &state);
 	engine.run_engine(game_loop);
+	delete(engine.state->current_plat);
+	delete(engine.state->next_plat);
+	delete(engine.state->obst1);
+	delete(engine.state->obst2);
 	return 0;
 }

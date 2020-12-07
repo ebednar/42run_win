@@ -14,14 +14,8 @@ void replace_light(Engine* eng)
 	eng->state->next_light = ptr;
 }
 
-void replace_platform(Engine* eng)
+void rand_next_platform(Engine *eng)
 {
-	int				i;
-	int				j;
-	unsigned int	k;
-	Entity** ptr;
-
-	k = 0;
 	int next = rand() % 3;
 	if (next == 1 && eng->state->next != left)
 		eng->state->next = right;
@@ -31,6 +25,65 @@ void replace_platform(Engine* eng)
 		eng->state->next = forw;
 	eng->state->plat_start[0] = eng->state->plat_end[0];
 	eng->state->plat_start[2] = eng->state->plat_end[2];
+}
+
+void	replace_obst(Engine* eng)
+{
+	int raw;
+	int line = 6;
+
+	for (int i = 0; i < 6; ++i)
+	{
+		raw = rand() % 3 - 1;
+		line += rand() % 3 + 1;
+		if (eng->state->next == forw)
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + line, -0.5f, eng->state->plat_end[2] + raw);
+		else if (eng->state->next == right)
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -0.5f, eng->state->plat_end[2] + line);
+		else
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -0.5f, eng->state->plat_end[2] - line);
+	}
+	Entity** ptr = eng->state->obst1;
+	eng->state->obst1 = eng->state->obst2;
+	eng->state->obst2 = ptr;
+}
+
+void	replace_coins(Engine* eng)
+{
+	int raw;
+	int line = 6;
+
+	for (int i = 0; i < 6; ++i)
+	{
+		raw = rand() % 3 - 1;
+		line += rand() % 3 + 1;
+		if (eng->state->next == forw)
+			eng->state->coins1[i]->move_to(eng->state->plat_end[0] + line, -0.5f, eng->state->plat_end[2] + raw);
+		else if (eng->state->next == right)
+			eng->state->coins1[i]->move_to(eng->state->plat_end[0] + raw, -0.5f, eng->state->plat_end[2] + line);
+		else
+			eng->state->coins1[i]->move_to(eng->state->plat_end[0] + raw, -0.5f, eng->state->plat_end[2] - line);
+		for (int j = 0; j < 6; ++j)
+		{
+			if (eng->state->coins1[i]->position == eng->state->obst2[j]->position)
+				eng->state->coins1[i]->move(0.0f, 1.2f, 0.0f);
+		}
+	}
+	Entity** ptr = eng->state->coins1;
+	eng->state->coins1 = eng->state->coins2;
+	eng->state->coins2 = ptr;
+}
+
+void replace_platform(Engine *eng)
+{
+	int				i;
+	int				j;
+	unsigned int	k;
+	Entity** ptr;
+
+	k = 0;
+	replace_obst(eng);
+	replace_coins(eng);
 	if (eng->state->next == forw)
 	{
 		for (i = -1; i < 29; ++i)
@@ -103,13 +156,17 @@ void	rotate_player(Engine* eng)
 void	game_loop(Engine* eng)
 {
 	controls(eng);
+	for (int i = 0; i < 6; ++i)
+	{
+		eng->state->coins1[i]->rotate(0.0f, 90.0f * eng->delta_time, 0.0f);
+		eng->state->coins2[i]->rotate(0.0f, 90.0f * eng->delta_time, 0.0f);
+	}
 	if (eng->state->rotate)
 	{
-		std::cout << "rotate" << std::endl;
 		rotate_player(eng);
 		return;
 	}
-	/*if (eng->state->delay >= 0)
+	if (eng->state->delay >= 0)
 	{
 		eng->state->delay--;
 		if (eng->state->delay == 0)
@@ -118,17 +175,22 @@ void	game_loop(Engine* eng)
 			replace_platform(eng);
 			replace_light(eng);
 		}
-	}*/
+	}
 	if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 2.0f)
 	{
-		std::cout << "detect" << std::endl;
+		std::cout << "detect1 " << eng->state->current << std::endl;
+		if (eng->state->current != forw)
+		{
+			std::cout << "detect2 " << eng->state->current << std::endl;
+		}
 		eng->state->rotate = true;
-		replace_platform(eng);
-		replace_light(eng);
+		rand_next_platform(eng);
 		eng->state->delay = 120;
 	}
 	else if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 4.0f)
 	{
+		if (eng->state->current == forw)
+			return ;
 		eng->state->shifting = false;
 		eng->state->shift_rotate = true;
 		if (eng->state->p_pos == left_r)

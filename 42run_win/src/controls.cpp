@@ -30,6 +30,12 @@ void	shift_player_r(Engine* eng)
 	eng->state->shift = 20;
 }
 
+void	jump_player(Engine* eng)
+{
+	eng->state->jump = true;
+	eng->state->jump_time = 1.0f;
+}
+
 void	controls(Engine* eng)
 {
 	float speed = glm::pi<float>() * eng->delta_time;
@@ -53,6 +59,18 @@ void	controls(Engine* eng)
 		eng->cam.pos.x = eng->player->position[0];
 		eng->cam.pos.z = eng->player->position[2];
 		eng->cam.yaw = -eng->player->angle.y;
+		
+		if (eng->state->jump_time > 0)
+		{
+			eng->state->jump_time -= eng->delta_time * 1.0f;
+			eng->player->move(0.0f, eng->delta_time * eng->state->jump_time * 2.0f, 0.0f);
+			eng->cam.pos.y += eng->delta_time * eng->state->jump_time * 2.0f;
+		}
+		else if (eng->player->position.y > -0.5f)
+		{
+			eng->player->move(0.0f, -eng->delta_time * 2.0f, 0.0f);
+			eng->cam.pos.y -= eng->delta_time * 2.0f;
+		}
 		if (eng->state->shift > 0)
 		{
 			eng->state->shift--;
@@ -66,5 +84,7 @@ void	controls(Engine* eng)
 			shift_player_l(eng);
 		if (eng->controls.keys[GLFW_KEY_D])
 			shift_player_r(eng);
+		if (eng->controls.keys[GLFW_KEY_SPACE])
+			jump_player(eng);
 	}
 }

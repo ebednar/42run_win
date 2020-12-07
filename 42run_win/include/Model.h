@@ -1,8 +1,16 @@
 #pragma once
 
+struct Material
+{
+	float	diffuse[3];
+	float	specular[3];
+	int		shininess;
+};
+
 class Model
 {
 public:
+	Material		material;
 	float			*vertices;
 	unsigned int	*indices;
 	unsigned char	*text_data;

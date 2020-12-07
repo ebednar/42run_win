@@ -58,6 +58,6 @@ void Render::draw_scene(std::vector<Entity *> scene, glm::vec3 **lights, Camera 
 		glUniform1f(glGetUniformLocation(mod->shader_id, "light.constant"), 1.0f);
 		glUniform1f(glGetUniformLocation(mod->shader_id, "light.linear"), 0.07f);
 		glUniform1f(glGetUniformLocation(mod->shader_id, "light.quadratic"), 0.017f);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, mod->ind_number);
 	}
 }
