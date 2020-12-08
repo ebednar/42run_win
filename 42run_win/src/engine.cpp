@@ -2,6 +2,7 @@
 #include "glad.h"
 #include <iostream>
 
+
 Engine::~Engine()
 {
 	int length = models.size();
@@ -41,14 +42,20 @@ void Engine::init_engine(int width, int height)
 	glfwSetWindowUserPointer(window, &controls);
 	glViewport(0, 0, width, height);
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	controls.yaw = cam.yaw;
 	controls.pitch = cam.pitch;
+	texter.init();
+	texter.set_shader("res/shaders/ui_text_vertex.glsl", "res/shaders/ui_text_fragment.glsl");
+	rend.init();
+	texter.vertex_buffer();
 }
 
 void Engine::run_engine(void (*func)(Engine *))
 {
 	old_time = glfwGetTime();
+	rend.set_lights_pos(light_pos, 3);
 	while (!glfwWindowShouldClose(window))
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -67,10 +74,13 @@ void Engine::run_engine(void (*func)(Engine *))
 
 		func(this);
 
-		rend.draw_scene(scene, light_pos, &cam, free_cam);
+		rend.draw_scene(scene, &cam, free_cam);
+		rend.draw_ui(&texter, text);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		if(close_eng)
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
 	}
 	glfwTerminate();
 }
@@ -105,3 +115,15 @@ void Engine::set_lights_pos()
 		light_pos[i] = &light_sources[i]->position;
 	}
 }
+
+void	 Engine::add_text_ui(std::string str, float x, float y, float scale)
+{
+	text_t *txt = new text_t(str, x, y, scale);
+	text.push_back(txt);
+}
+
+void	 Engine::change_text(std::string str, int id)
+{
+	text[id]->str = str;
+}
+

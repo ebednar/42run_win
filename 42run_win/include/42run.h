@@ -46,10 +46,16 @@ struct state
 	int			delay;
 	bool		jump;
 	float		jump_time;
+	bool		game_over;
+	int			coins;
 };
 
 void	init_game(Engine* eng, state* state);
+void	init_data(Engine* eng, state* state);
 void	game_loop(Engine* eng);
 void	controls(Engine* eng);
 void	shift_player_l(Engine* eng);
 void	shift_player_r(Engine* eng);
+void	replace_platform(Engine* eng);
+void	replace_light(Engine* eng);
+void	detect_collision(Engine* eng);

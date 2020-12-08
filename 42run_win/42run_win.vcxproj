@@ -97,8 +97,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)42run_win\lib\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)42run_win\lib;$(SolutionDir)42run_win\lib\GLFW\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;freetype.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -156,17 +156,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\collision.cpp" />
     <ClCompile Include="src\controls.cpp" />
     <ClCompile Include="src\engine.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\game_loop.cpp" />
     <ClCompile Include="src\init_level.cpp" />
+    <ClCompile Include="src\replace.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\events.cpp" />
     <ClCompile Include="src\model.cpp" />
     <ClCompile Include="src\render.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ui_text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\42run.h" />
@@ -174,16 +177,19 @@
     <ClInclude Include="include\engine.h" />
     <ClInclude Include="include\entity.h" />
     <ClInclude Include="include\events.h" />
+    <ClInclude Include="include\ft2build.h" />
     <ClInclude Include="include\model.h" />
     <ClInclude Include="include\render.h" />
     <ClInclude Include="include\glad.h" />
     <ClInclude Include="include\khrplatform.h" />
     <ClInclude Include="include\shader.h" />
     <ClInclude Include="include\stb_image.h" />
+    <ClInclude Include="include\ui_text.h" />
     <ClInclude Include="lib\GLFW\include\GLFW\glfw3.h" />
     <ClInclude Include="lib\GLFW\include\GLFW\glfw3native.h" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="lib\freetype.lib" />
     <Library Include="lib\GLFW\lib-vc2019\glfw3.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

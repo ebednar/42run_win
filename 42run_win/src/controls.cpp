@@ -39,7 +39,16 @@ void	jump_player(Engine* eng)
 void	controls(Engine* eng)
 {
 	float speed = glm::pi<float>() * eng->delta_time;
-	eng->player->move(speed * cos(glm::radians(eng->player->angle[1])), 0.0f, -speed * sin(glm::radians(eng->player->angle[1])));
+
+	if (eng->state->game_over)
+	{
+		if (eng->controls.keys[GLFW_KEY_ENTER])
+		{
+			eng->close_eng = true;
+		}
+	}
+	else
+		eng->player->move(speed * cos(glm::radians(eng->player->angle[1])), 0.0f, -speed * sin(glm::radians(eng->player->angle[1])));
 	if (eng->free_cam)
 	{
 		eng->cam.speed = 8.0f * eng->delta_time;
@@ -62,15 +71,17 @@ void	controls(Engine* eng)
 		
 		if (eng->state->jump_time > 0)
 		{
-			eng->state->jump_time -= eng->delta_time * 1.0f;
-			eng->player->move(0.0f, eng->delta_time * eng->state->jump_time * 2.0f, 0.0f);
-			eng->cam.pos.y += eng->delta_time * eng->state->jump_time * 2.0f;
+			eng->state->jump_time -= eng->delta_time * 2.0f;
+			eng->player->move(0.0f, eng->delta_time * eng->state->jump_time * 4.0f, 0.0f);
+			eng->cam.pos.y += eng->delta_time * eng->state->jump_time * 4.0f;
 		}
 		else if (eng->player->position.y > -0.5f)
 		{
 			eng->player->move(0.0f, -eng->delta_time * 2.0f, 0.0f);
 			eng->cam.pos.y -= eng->delta_time * 2.0f;
 		}
+		else
+			eng->state->jump = false;
 		if (eng->state->shift > 0)
 		{
 			eng->state->shift--;
@@ -78,13 +89,13 @@ void	controls(Engine* eng)
 		}
 		else
 			eng->state->shifting = true;
-		if (eng->state->shifting == false || eng->state->shift_rotate)
+		if (eng->state->shifting == false || eng->state->shift_rotate || eng->state->game_over)
 			return ;
 		if (eng->controls.keys[GLFW_KEY_A])
 			shift_player_l(eng);
 		if (eng->controls.keys[GLFW_KEY_D])
 			shift_player_r(eng);
-		if (eng->controls.keys[GLFW_KEY_SPACE])
+		if (eng->controls.keys[GLFW_KEY_SPACE] && !eng->state->jump)
 			jump_player(eng);
 	}
 }

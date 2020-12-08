@@ -9,7 +9,7 @@ void	generate_obst(Engine* eng, Entity** obst)
 	{
 		raw = rand() % 3 - 1;
 		line += rand() % 3 + 1;
-		obst[i]->move_to(eng->state->plat_end[0] + line, -0.5f, eng->state->plat_end[2] + raw);
+		obst[i]->move_to(eng->state->plat_end[0] + line, -1.0f, eng->state->plat_end[2] + raw);
 	}
 }
 
@@ -21,13 +21,19 @@ void	generate_coins(Engine* eng, Entity** coins)
 	for (int i = 0; i < 6; ++i)
 	{
 		raw = rand() % 3 - 1;
-		line += rand() % 3 + 1;
+		line += rand() % 4 + 1;
 		coins[i]->scale(0.2f, 0.2f, 0.2f);
 		coins[i]->move_to(eng->state->plat_end[0] + line, -0.5f, eng->state->plat_end[2] + raw);
 		for (int j = 0; j < 6; ++j)
 		{
-			if (coins[i]->position == eng->state->obst2[j]->position)
-				coins[i]->move(0.0f, 1.2f, 0.0f);
+			if (coins[i]->position.x == eng->state->obst1[j]->position.x && coins[i]->position.z == eng->state->obst1[j]->position.z)
+			{
+				coins[i]->move(0.0f, 1.0f, 0.0f);
+			}
+			if (coins[i]->position.x == eng->state->obst2[j]->position.x && coins[i]->position.z == eng->state->obst2[j]->position.z)
+			{
+				coins[i]->move(0.0f, 1.0f, 0.0f);
+			}
 		}
 	}
 }
@@ -94,6 +100,7 @@ void		create_obst(Engine* eng)
 		Entity* obst = new Entity;
 		obst->set_model(mod);
 		eng->add_entity(obst);
+		obst->scale(1.0f, -1.0f, 1.0f);
 		eng->state->obst1[i] = obst;
 	}
 	for (int i = 0; i < 6; ++i)
@@ -101,6 +108,7 @@ void		create_obst(Engine* eng)
 		Entity* obst = new Entity;
 		obst->set_model(mod);
 		eng->add_entity(obst);
+		obst->scale(1.0f, -1.0f, 1.0f);
 		eng->state->obst2[i] = obst;
 	}
 }
@@ -129,6 +137,30 @@ void		create_coins(Engine* eng)
 	}
 }
 
+void		init_data(Engine* eng, state* state)
+{
+	eng->player->move_to(0.0f, -0.5f, 0.0f);
+	memset(state->plat_end, 0, 3 * sizeof(float));
+	memset(state->plat_start, 0, 3 * sizeof(float));
+	state->next = forw;
+	state->current = forw;
+	state->rotate = false;
+	state->frames = 0.0f;
+	state->p_pos = center_r;
+	state->shifting_x = 0.0f;
+	state->shifting_y = 0.0f;
+	eng->state->shifting = true;
+	eng->state->shift_rotate = false;
+	eng->state->delay = -1;
+	eng->state->jump = false;
+	eng->state->jump_time = 0;
+	eng->state->game_over = false;
+	state->prev_light->move_to(0.0f, 2.0f, 0.0f);
+	state->current_light->move_to(15.0f, 2.0f, 0.0f);
+	state->next_light->move_to(30.0f, 2.0f, 0.0f);
+	state->coins = 0;
+}
+
 void		init_game(Engine* eng, state* state)
 {
 	Entity* player = new Entity();
@@ -153,41 +185,22 @@ void		init_game(Engine* eng, state* state)
 	player->set_model(player_mod);
 	eng->add_entity(player);
 	eng->set_player(player);
-	player->move_to(0.0f, -0.5f, 0.0f);
-	player->scale(1.0f, 1.0f, 1.0f);
-
-	memset(state->plat_end, 0, 3 * sizeof(float));
-	memset(state->plat_start, 0, 3 * sizeof(float));
-	state->next = forw;
-	state->current = forw;
-	state->rotate = false;
-	state->frames = 0.0f;
-	state->p_pos = center_r;
-	state->shifting_x = 0.0f;
-	state->shifting_y = 0.0f;
-	eng->state->shifting = true;
-	eng->state->shift_rotate = false;
-	eng->state->delay = -1;
-	eng->state->jump = false;
-	eng->state->jump_time = 0;
+	player->scale(0.5f, 1.0f, 0.5f);
 
 	light1->set_model(light_mod);
 	eng->add_entity(light1);
 	eng->add_light_source(light1);
 	light1->scale(0.1f, 0.1f, 0.1f);
-	light1->move_to(15.0f, 2.0f, 0.0f);
 
 	light2->set_model(light_mod);
 	eng->add_entity(light2);
 	eng->add_light_source(light2);
 	light2->scale(0.1f, 0.1f, 0.1f);
-	light2->move_to(45.0f, 2.0f, 0.0f);
 
 	light3->set_model(light_mod);
 	eng->add_entity(light3);
 	eng->add_light_source(light3);
 	light3->scale(0.1f, 0.1f, 0.1f);
-	light3->move_to(-15.0f, 2.0f, 0.0f);
 
 	eng->set_lights_pos();
 	state->prev_light = light3;
@@ -200,7 +213,12 @@ void		init_game(Engine* eng, state* state)
 	state->coins2 = new Entity * [6];
 	create_obst(eng);
 	create_coins(eng);
+	init_data(eng, eng->state);
 	create_platform(eng, state);
-
-	eng->free_cam = false;
+	eng->add_text_ui("0000", WIDTH / 2 - 50, HEIGHT - 50, 0.5f);
+	eng->free_cam = true;
+	if (!eng->free_cam)
+	{
+		eng->cam.pos.y = 2.3f;
+	}
 }
