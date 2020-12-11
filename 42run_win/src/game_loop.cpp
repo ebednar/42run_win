@@ -59,6 +59,13 @@ void		rotate_player(Engine* eng)
 void		game_loop(Engine* eng)
 {
 	controls(eng);
+	if (!eng->state->game_over)
+	{
+		eng->state->timer_s += eng->delta_time;
+		int time = (int)eng->state->timer_s;
+		eng->change_text(std::to_string(time), 0);
+	}
+	eng->change_text("coins: " + std::to_string(eng->state->coins), 1);
 	for (int i = 0; i < 6; ++i)
 	{
 		eng->state->coins1[i]->rotate(0.0f, 90.0f * eng->delta_time, 0.0f);

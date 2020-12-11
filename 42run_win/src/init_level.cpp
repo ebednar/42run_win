@@ -158,6 +158,7 @@ void		init_data(Engine* eng, state* state)
 	state->prev_light->move_to(0.0f, 2.0f, 0.0f);
 	state->current_light->move_to(15.0f, 2.0f, 0.0f);
 	state->next_light->move_to(30.0f, 2.0f, 0.0f);
+	state->timer_s = 0.0;
 	state->coins = 0;
 }
 
@@ -215,8 +216,9 @@ void		init_game(Engine* eng, state* state)
 	create_coins(eng);
 	init_data(eng, eng->state);
 	create_platform(eng, state);
-	eng->add_text_ui("0000", WIDTH / 2 - 50, HEIGHT - 50, 0.5f);
-	eng->free_cam = true;
+	eng->add_text_ui("0", WIDTH / 2 - 20, HEIGHT - 40, 0.5f);
+	eng->add_text_ui("coins: 0", WIDTH - 170, HEIGHT - 40, 0.5f);
+	eng->free_cam = false;
 	if (!eng->free_cam)
 	{
 		eng->cam.pos.y = 2.3f;

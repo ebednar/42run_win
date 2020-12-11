@@ -19,14 +19,14 @@ void Render::set_lights_pos(glm::vec3 **lights, int numb)
 	}
 }
 
-void Render::draw_scene(std::vector<Entity *> scene, Camera *cam, bool free_cam)
+void Render::draw_scene(std::vector<Entity *> scene, glm::vec3** lights, Camera *cam, bool free_cam)
 {
 	int length = scene.size();
 	if (free_cam)
 		cam->update_free();
 	else
 		cam->update_follow(player->position);
-
+	set_lights_pos(lights, 3);
 
 	for (int i = 0; i < length; ++i)
 	{

@@ -48,6 +48,7 @@ struct state
 	float		jump_time;
 	bool		game_over;
 	int			coins;
+	double		timer_s;
 };
 
 void	init_game(Engine* eng, state* state);

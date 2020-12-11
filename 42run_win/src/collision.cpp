@@ -6,6 +6,8 @@ void	detect_collision(Engine* eng)
 	{
 		if (abs(eng->player->position.x - eng->state->obst1[i]->position.x) < 0.5f && abs(eng->player->position.z - eng->state->obst1[i]->position.z) < 0.5f)
 		{
+			if (eng->free_cam)
+				return ;
 			if (eng->player->position.y < -0.05f)
 				eng->state->game_over = true;
 		}

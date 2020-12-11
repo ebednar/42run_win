@@ -26,8 +26,8 @@ void Camera::update_free()
 
 void Camera::update_follow(glm::vec3 targ)
 {
-	pos.x -= cos(glm::radians(yaw)) * 3;
-	pos.z -= sin(glm::radians(yaw)) * 3;
+	pos.x = targ.x - cos(glm::radians(yaw)) * 3;
+	pos.z = targ.z - sin(glm::radians(yaw)) * 3;
 	direction = glm::normalize(pos - targ);
 	glm::vec3 temp_up = glm::vec3(0.0f, 1.0f, 0.0f);
 	right = glm::normalize(glm::cross(temp_up, direction));

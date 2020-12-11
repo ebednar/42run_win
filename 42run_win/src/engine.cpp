@@ -74,7 +74,7 @@ void Engine::run_engine(void (*func)(Engine *))
 
 		func(this);
 
-		rend.draw_scene(scene, &cam, free_cam);
+		rend.draw_scene(scene, light_pos, &cam, free_cam);
 		rend.draw_ui(&texter, text);
 
 		glfwSwapBuffers(window);
