@@ -50,6 +50,15 @@ void Engine::init_engine(int width, int height)
 	texter.set_shader("res/shaders/ui_text_vertex.glsl", "res/shaders/ui_text_fragment.glsl");
 	rend.init();
 	texter.vertex_buffer();
+	std::vector<std::string> faces;
+	faces.push_back("res/cubemaps/right.jpg");
+	faces.push_back("res/cubemaps/left.jpg");
+	faces.push_back("res/cubemaps/top.jpg");
+	faces.push_back("res/cubemaps/bottom.jpg");
+	faces.push_back("res/cubemaps/front.jpg");
+	faces.push_back("res/cubemaps/back.jpg");
+	skybox.init(faces);
+	skybox.set_shader("res/shaders/skybox_vert.glsl", "res/shaders/skybox_frag.glsl");
 }
 
 void Engine::run_engine(void (*func)(Engine *))
@@ -74,6 +83,7 @@ void Engine::run_engine(void (*func)(Engine *))
 
 		func(this);
 
+		rend.draw_skybox(&skybox, &cam);
 		rend.draw_scene(scene, light_pos, &cam, free_cam);
 		rend.draw_ui(&texter, text);
 

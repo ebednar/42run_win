@@ -69,8 +69,6 @@ void Render::draw_scene(std::vector<Entity *> scene, glm::vec3** lights, Camera 
 
 void Render::draw_ui(ui_text* texter, std::vector<text_t *> text)
 {
-
-	
 	glUseProgram(texter->shader_id);
 	unsigned int proj_loc = glGetUniformLocation(texter->shader_id, "u_P");
 	glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(ortProjection));
@@ -111,4 +109,19 @@ void Render::draw_ui(ui_text* texter, std::vector<text_t *> text)
 	}
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void	Render::draw_skybox(Skybox *skybox, Camera* cam)
+{
+	glDepthMask(GL_FALSE);
+	glUseProgram(skybox->shader_id);
+	glm::mat4 view = glm::mat4(glm::mat3(cam->view));
+	unsigned int view_loc = glGetUniformLocation(skybox->shader_id, "u_V");
+	glUniformMatrix4fv(view_loc, 1, GL_FALSE, glm::value_ptr(view));
+	unsigned int proj_loc = glGetUniformLocation(skybox->shader_id, "u_P");
+	glUniformMatrix4fv(proj_loc, 1, GL_FALSE, glm::value_ptr(projection));
+	glBindVertexArray(skybox->vao);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, skybox->texture);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+	glDepthMask(GL_TRUE);
 }

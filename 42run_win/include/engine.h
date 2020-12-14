@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include "render.h"
 #include "events.h"
+#include "skybox.h"
 
 struct state;
 
@@ -13,6 +14,7 @@ public:
 	std::vector<Model *>		models;
 	std::vector<Entity *>		scene;
 	Controls					controls;
+	Skybox						skybox;
 	Entity						*player;
 	std::vector<Entity *>		light_sources;
 	glm::vec3					**light_pos;
