@@ -139,7 +139,6 @@ void		create_coins(Engine* eng)
 
 void		init_data(Engine* eng, state* state)
 {
-	eng->player->move_to(0.0f, -0.5f, 0.0f);
 	memset(state->plat_end, 0, 3 * sizeof(float));
 	memset(state->plat_start, 0, 3 * sizeof(float));
 	state->next = forw;
@@ -172,7 +171,7 @@ void		init_game(Engine* eng, state* state)
 	Model* player_mod = new Model();
 	Model* light_mod = new Model();
 
-	player_mod->load_obj("res/models/test.obj", true);
+	player_mod->load_obj("res/models/sphere.obj", true);
 	player_mod->set_shader("res/shaders/stand_vertex.glsl", "res/shaders/stand_fragment.glsl");
 	player_mod->load_texture("res/textures/wall.jpg");
 
@@ -186,7 +185,9 @@ void		init_game(Engine* eng, state* state)
 	player->set_model(player_mod);
 	eng->add_entity(player);
 	eng->set_player(player);
-	player->scale(0.5f, 1.0f, 0.5f);
+	player->move_to(0.0f, -0.7f, 0.0f);
+	player->scale(6.0f, 6.0f, 6.0f);
+	//player->scale(0.5f, 1.0f, 0.5f);
 
 	light1->set_model(light_mod);
 	eng->add_entity(light1);

@@ -75,7 +75,7 @@ void	controls(Engine* eng)
 			eng->player->move(0.0f, eng->delta_time * eng->state->jump_time * 4.0f, 0.0f);
 			eng->cam.pos.y += eng->delta_time * eng->state->jump_time * 4.0f;
 		}
-		else if (eng->player->position.y > -0.5f)
+		else if (eng->player->position.y > -0.7f)
 		{
 			eng->player->move(0.0f, -eng->delta_time * 2.0f, 0.0f);
 			eng->cam.pos.y -= eng->delta_time * 2.0f;

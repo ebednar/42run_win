@@ -58,6 +58,7 @@ void		rotate_player(Engine* eng)
 
 void		game_loop(Engine* eng)
 {
+	std::cout << eng->player->position.y << std::endl;
 	controls(eng);
 	if (!eng->state->game_over)
 	{
