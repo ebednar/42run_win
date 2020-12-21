@@ -117,5 +117,6 @@
   <ItemGroup>
     <Library Include="lib\GLFW\lib-vc2019\glfw3.lib" />
     <Library Include="lib\freetype.lib" />
+    <Library Include="lib\irrKlang.lib" />
   </ItemGroup>
 </Project>

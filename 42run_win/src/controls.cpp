@@ -48,7 +48,10 @@ void	controls(Engine* eng)
 		}
 	}
 	else
+	{
 		eng->player->move(speed * cos(glm::radians(eng->player->angle[1])), 0.0f, -speed * sin(glm::radians(eng->player->angle[1])));
+		eng->player->rotate(0.0f, 0.0f, -12 * speed * glm::pi<float>());
+	}
 	if (eng->free_cam)
 	{
 		eng->cam.speed = 8.0f * eng->delta_time;

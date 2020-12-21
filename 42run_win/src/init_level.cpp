@@ -9,7 +9,7 @@ void	generate_obst(Engine* eng, Entity** obst)
 	{
 		raw = rand() % 3 - 1;
 		line += rand() % 3 + 1;
-		obst[i]->move_to(eng->state->plat_end[0] + line, -1.0f, eng->state->plat_end[2] + raw);
+		obst[i]->move_to(eng->state->plat_end[0] + line, -0.75f, eng->state->plat_end[2] + raw);
 	}
 }
 
@@ -93,14 +93,14 @@ void		create_obst(Engine* eng)
 
 	mod->load_obj("res/models/test.obj", true);
 	mod->set_shader("res/shaders/stand_vertex.glsl", "res/shaders/stand_fragment.glsl");
-	mod->load_texture("res/textures/wall.jpg");
+	mod->load_texture("res/textures/cat.bmp");
 
 	for (int i = 0; i < 6; ++i)
 	{
 		Entity* obst = new Entity;
 		obst->set_model(mod);
 		eng->add_entity(obst);
-		obst->scale(1.0f, -1.0f, 1.0f);
+		obst->scale(1.0f, -0.5f, 1.0f);
 		eng->state->obst1[i] = obst;
 	}
 	for (int i = 0; i < 6; ++i)
@@ -108,7 +108,7 @@ void		create_obst(Engine* eng)
 		Entity* obst = new Entity;
 		obst->set_model(mod);
 		eng->add_entity(obst);
-		obst->scale(1.0f, -1.0f, 1.0f);
+		obst->scale(1.0f, -0.5f, 1.0f);
 		eng->state->obst2[i] = obst;
 	}
 }

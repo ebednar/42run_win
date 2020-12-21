@@ -14,6 +14,9 @@ Engine::~Engine()
 	length = scene.size();
 	for (int i = 0; i < length; ++i)
 		delete scene[i];
+	length = text.size();
+	for (int i = 0; i < length; ++i)
+		delete text[i];
 	std::cout << "Engine off" << std::endl;
 }
 

@@ -24,11 +24,11 @@ static void	replace_obst(Engine* eng)
 		raw = rand() % 3 - 1;
 		line += rand() % 4 + 2;
 		if (eng->state->next == forw)
-			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + line, -1.0f, eng->state->plat_end[2] + raw);
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + line, -0.75f, eng->state->plat_end[2] + raw);
 		else if (eng->state->next == right)
-			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -1.0f, eng->state->plat_end[2] + line);
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -0.75f, eng->state->plat_end[2] + line);
 		else
-			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -1.0f, eng->state->plat_end[2] - line);
+			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + raw, -0.75f, eng->state->plat_end[2] - line);
 	}
 	Entity** ptr = eng->state->obst1;
 	eng->state->obst1 = eng->state->obst2;
