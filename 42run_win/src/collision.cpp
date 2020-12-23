@@ -8,11 +8,11 @@ void	detect_collision(Engine* eng)
 		{
 			if (eng->free_cam)
 				return ;
-			if (eng->player->position.y < -0.05f)
+			if (eng->player->position.y < -0.2f)
 				eng->state->game_over = true;
 		}
 		if (abs(eng->player->position.x - eng->state->coins1[i]->position.x) < 0.5f && abs(eng->player->position.y - eng->state->coins1[i]->position.y) < 0.6f
-			&& abs(eng->player->position.z - eng->state->coins1[i]->position.z) < 0.5f)
+			&& abs(eng->player->position.z - eng->state->coins1[i]->position.z) < 0.2f)
 		{
 			eng->state->coins++;
 			eng->state->coins1[i]->move_to(-1.0f, -0.5f, -1.0f);

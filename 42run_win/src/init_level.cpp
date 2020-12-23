@@ -93,7 +93,7 @@ void		create_obst(Engine* eng)
 
 	mod->load_obj("res/models/test.obj", true);
 	mod->set_shader("res/shaders/stand_vertex.glsl", "res/shaders/stand_fragment.glsl");
-	mod->load_texture("res/textures/cat.bmp");
+	mod->load_texture("res/textures/angry_cat.jpg");
 
 	for (int i = 0; i < 6; ++i)
 	{
@@ -173,7 +173,7 @@ void		init_game(Engine* eng, state* state)
 
 	player_mod->load_obj("res/models/sphere.obj", true);
 	player_mod->set_shader("res/shaders/stand_vertex.glsl", "res/shaders/stand_fragment.glsl");
-	player_mod->load_texture("res/textures/wall.jpg");
+	player_mod->load_texture("res/textures/cat.bmp");
 
 	light_mod->load_obj("res/models/test.obj", true);
 	light_mod->set_shader("res/shaders/light_vertex.glsl", "res/shaders/light_fragment.glsl");
@@ -219,7 +219,7 @@ void		init_game(Engine* eng, state* state)
 	create_platform(eng, state);
 	eng->add_text_ui("0", WIDTH / 2 - 20, HEIGHT - 40, 0.5f);
 	eng->add_text_ui("coins: 0", WIDTH - 170, HEIGHT - 40, 0.5f);
-	eng->free_cam = true;
+	eng->free_cam = false;
 	if (!eng->free_cam)
 	{
 		eng->cam.pos.y = 2.3f;

@@ -1,6 +1,6 @@
 #include "42run.h"
 #include <time.h>
-#include "irrKlang.h"
+//#include "irrKlang.h"
 
 int		main(void)
 {
@@ -11,7 +11,7 @@ int		main(void)
 	engine.init_engine(WIDTH, HEIGHT);
 	engine.state = &state;
 	init_game(&engine, &state);
-	irrklang::ISoundEngine* sound_engine = irrklang::createIrrKlangDevice();
+	//irrklang::ISoundEngine* sound_engine = irrklang::createIrrKlangDevice();
 	//sound_engine->play2D("", true);
 	engine.run_engine(game_loop);
 	delete(engine.state->current_plat);
