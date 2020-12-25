@@ -89,7 +89,7 @@ void		game_loop(Engine* eng)
 	{
 		eng->state->rotate = true;
 		rand_next_platform(eng);
-		eng->state->delay = 120;
+		eng->state->delay = 70;
 	}
 	else if (abs(eng->player->position.x + eng->player->position.z - eng->state->plat_start[0] - eng->state->plat_start[2]) <= 4.0f)
 	{

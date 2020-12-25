@@ -4,14 +4,14 @@ void	detect_collision(Engine* eng)
 {
 	for (int i = 0; i < 6; ++i)
 	{
-		if (abs(eng->player->position.x - eng->state->obst1[i]->position.x) < 0.5f && abs(eng->player->position.z - eng->state->obst1[i]->position.z) < 0.5f)
+		if (abs(eng->player->position.x - eng->state->obst1[i]->position.x) < 0.45f && abs(eng->player->position.z - eng->state->obst1[i]->position.z) < 0.45f)
 		{
 			if (eng->free_cam)
 				return ;
 			if (eng->player->position.y < -0.2f)
 				eng->state->game_over = true;
 		}
-		if (abs(eng->player->position.x - eng->state->coins1[i]->position.x) < 0.5f && abs(eng->player->position.y - eng->state->coins1[i]->position.y) < 0.6f
+		if (abs(eng->player->position.x - eng->state->coins1[i]->position.x) < 0.5f && abs(eng->player->position.y - eng->state->coins1[i]->position.y) < 0.5f
 			&& abs(eng->player->position.z - eng->state->coins1[i]->position.z) < 0.2f)
 		{
 			eng->state->coins++;

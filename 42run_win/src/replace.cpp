@@ -17,12 +17,12 @@ void		replace_light(Engine* eng)
 static void	replace_obst(Engine* eng)
 {
 	int raw;
-	int line = 5;
+	int line = 6;
 
 	for (int i = 0; i < 6; ++i)
 	{
 		raw = rand() % 3 - 1;
-		line += rand() % 4 + 2;
+		line += rand() % 4 + 1;
 		if (eng->state->next == forw)
 			eng->state->obst1[i]->move_to(eng->state->plat_end[0] + line, -0.75f, eng->state->plat_end[2] + raw);
 		else if (eng->state->next == right)
@@ -43,7 +43,7 @@ static void	replace_coins(Engine* eng)
 	for (int i = 0; i < 6; ++i)
 	{
 		raw = rand() % 3 - 1;
-		line += rand() % 3 + 1;
+		line += rand() % 4 + 1;
 		if (eng->state->next == forw)
 			eng->state->coins1[i]->move_to(eng->state->plat_end[0] + line, -0.5f, eng->state->plat_end[2] + raw);
 		else if (eng->state->next == right)

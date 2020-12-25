@@ -38,7 +38,7 @@ void	jump_player(Engine* eng)
 
 void	controls(Engine* eng)
 {
-	float speed = glm::pi<float>() * eng->delta_time;
+	float	speed = glm::pi<float>() * eng->delta_time;
 
 	if (eng->state->game_over)
 	{
